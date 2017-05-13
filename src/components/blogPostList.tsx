@@ -1,30 +1,44 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import * as redux from "redux";
+import { bindActionCreators } from "redux";
 import {Store} from '../store';
 import { IBlogPost } from '../interfaces';
+import { getPosts } from '../actions';
 
 interface IStateProps {
-    blogPosts: Array<IBlogPost>;
+    blogPosts: IBlogPost[];
 }
 
-type BlogPostProps = IStateProps;
+interface IDispatchProps {
+    getPosts: any;
+}
+
+type BlogPostProps = IStateProps & IDispatchProps;
 
 class BlogPostList extends React.Component<BlogPostProps, any> {
+    componentWillMount() {
+        console.log('will mount');
+        this.props.getPosts();
+    }
+
     render() {
         return (
             <div>
                 <h2>Posts:</h2>
-                { this.props.blogPosts.map((bp) => <div key = {bp.id}>{bp.id}</div>)}
+                { this.props.blogPosts.map((bp) => { return (<span>{bp.title}</span>)})}
             </div>
         )
     }
 }
 
-function mapStateToPros(state: Store.All) : IStateProps {
+function mapStateToProps(state: any) : IStateProps {
     return {
-        blogPosts: state.blogPostList
+        blogPosts: state.blogPostList.blogPostList // TODO: WTF???
     };
 }
 
-export default connect(mapStateToPros)(BlogPostList);
+function mapDispatchToProps(dispatch: any) : IDispatchProps {
+    return bindActionCreators({getPosts}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BlogPostList);

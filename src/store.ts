@@ -8,6 +8,6 @@ export namespace Store {
     export type BlogPostList = Array<BlogPost>;
 
     export type All = {
-        blogPostList: BlogPostList;
+        all: BlogPostList;
     };
 }

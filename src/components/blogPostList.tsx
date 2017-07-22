@@ -17,7 +17,6 @@ type BlogPostProps = IStateProps & IDispatchProps;
 
 class BlogPostList extends React.Component<BlogPostProps, any> {
     componentWillMount() {
-        console.log('will mount');
         this.props.getPosts();
     }
 
@@ -33,7 +32,7 @@ class BlogPostList extends React.Component<BlogPostProps, any> {
 
 function mapStateToProps(state: any) : IStateProps {
     return {
-        blogPosts: state.blogPostList.blogPostList // TODO: WTF???
+        blogPosts: state.blogPostList.all
     };
 }
 
